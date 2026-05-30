@@ -1,0 +1,1688 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>統計検定2級 学習ノート</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;600;700&family=JetBrains+Mono:wght@400;600&family=Zen+Kaku+Gothic+New:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
+  <style>
+    :root {
+      --bg-primary: #0d0f14;
+      --bg-secondary: #12151c;
+      --bg-card: #181c26;
+      --bg-card-hover: #1e2330;
+      --bg-highlight: #1a2035;
+      --accent-gold: #c9a84c;
+      --accent-gold-dim: #8a6e2e;
+      --accent-blue: #4a9eff;
+      --accent-teal: #2dd4bf;
+      --accent-red: #f87171;
+      --accent-purple: #a78bfa;
+      --text-primary: #e8e9ef;
+      --text-secondary: #9aa0b4;
+      --text-dim: #5a6070;
+      --border: #2a2f3e;
+      --border-accent: #3a4055;
+      --glow-gold: rgba(201, 168, 76, 0.15);
+      --glow-blue: rgba(74, 158, 255, 0.12);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Zen Kaku Gothic New', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.8;
+      font-size: 15px;
+      min-height: 100vh;
+    }
+
+    /* ========== SIDEBAR ========== */
+    .sidebar {
+      position: fixed;
+      left: 0; top: 0;
+      width: 260px;
+      height: 100vh;
+      background: var(--bg-secondary);
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      z-index: 100;
+      padding: 24px 0 40px;
+    }
+
+    .sidebar-logo {
+      padding: 0 20px 20px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 16px;
+    }
+
+    .sidebar-logo h1 {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--accent-gold);
+      letter-spacing: 0.05em;
+      line-height: 1.4;
+    }
+
+    .sidebar-logo p {
+      font-size: 11px;
+      color: var(--text-dim);
+      margin-top: 4px;
+      letter-spacing: 0.03em;
+    }
+
+    .sidebar-section {
+      padding: 0 12px;
+      margin-bottom: 8px;
+    }
+
+    .sidebar-section-title {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-dim);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 8px 8px 4px;
+    }
+
+    .sidebar-link {
+      display: block;
+      padding: 7px 10px;
+      border-radius: 6px;
+      font-size: 12.5px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: all 0.18s;
+      line-height: 1.4;
+    }
+
+    .sidebar-link:hover {
+      background: var(--bg-card);
+      color: var(--text-primary);
+    }
+
+    .sidebar-link.active {
+      background: var(--glow-gold);
+      color: var(--accent-gold);
+      border-left: 2px solid var(--accent-gold);
+    }
+
+    /* ========== MAIN ========== */
+    .main {
+      margin-left: 260px;
+      padding: 0 48px 80px;
+      max-width: 1100px;
+    }
+
+    /* ========== HERO ========== */
+    .hero {
+      padding: 64px 0 48px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 56px;
+      position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -48px; right: -48px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent-gold-dim), transparent);
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--glow-gold);
+      border: 1px solid var(--accent-gold-dim);
+      border-radius: 100px;
+      padding: 4px 12px;
+      font-size: 11px;
+      color: var(--accent-gold);
+      letter-spacing: 0.08em;
+      font-weight: 700;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.3;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 span {
+      color: var(--accent-gold);
+    }
+
+    .hero-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      max-width: 620px;
+      line-height: 1.8;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 32px;
+      margin-top: 32px;
+    }
+
+    .stat-item {
+      text-align: left;
+    }
+
+    .stat-num {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--accent-gold);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: var(--text-dim);
+      margin-top: 4px;
+      letter-spacing: 0.06em;
+    }
+
+    /* ========== SECTION ========== */
+    .section {
+      margin-bottom: 64px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 28px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .icon-gold { background: var(--glow-gold); }
+    .icon-blue { background: var(--glow-blue); }
+    .icon-teal { background: rgba(45, 212, 191, 0.12); }
+    .icon-purple { background: rgba(167, 139, 250, 0.12); }
+    .icon-red { background: rgba(248, 113, 113, 0.12); }
+
+    .section-title {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .section-sub {
+      font-size: 12px;
+      color: var(--text-dim);
+      margin-top: 2px;
+    }
+
+    /* ========== FAQ ========== */
+    .faq-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .faq-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .faq-item:hover { border-color: var(--border-accent); }
+
+    .faq-question {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      cursor: pointer;
+      user-select: none;
+      gap: 12px;
+    }
+
+    .faq-question-text {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.5;
+    }
+
+    .faq-badge {
+      flex-shrink: 0;
+      padding: 2px 8px;
+      border-radius: 100px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .badge-hot {
+      background: rgba(248, 113, 113, 0.2);
+      color: var(--accent-red);
+      border: 1px solid rgba(248, 113, 113, 0.3);
+    }
+
+    .badge-key {
+      background: var(--glow-gold);
+      color: var(--accent-gold);
+      border: 1px solid var(--accent-gold-dim);
+    }
+
+    .faq-chevron {
+      flex-shrink: 0;
+      width: 20px;
+      height: 20px;
+      color: var(--text-dim);
+      transition: transform 0.25s;
+    }
+
+    .faq-item.open .faq-chevron { transform: rotate(180deg); }
+
+    .faq-answer {
+      display: none;
+      padding: 0 20px 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .faq-item.open .faq-answer { display: block; }
+
+    .faq-answer p {
+      font-size: 13.5px;
+      color: var(--text-secondary);
+      line-height: 1.9;
+      margin-top: 14px;
+    }
+
+    /* ========== QA CARD ========== */
+    .qa-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      margin-bottom: 20px;
+      overflow: hidden;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .qa-card:hover {
+      border-color: var(--border-accent);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+    }
+
+    .qa-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 20px 24px 16px;
+    }
+
+    .qa-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .avatar-q {
+      background: var(--glow-blue);
+      color: var(--accent-blue);
+      border: 1px solid rgba(74, 158, 255, 0.3);
+    }
+
+    .avatar-a {
+      background: var(--glow-gold);
+      color: var(--accent-gold);
+      border: 1px solid var(--accent-gold-dim);
+    }
+
+    .qa-content-label {
+      font-size: 10px;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .qa-text {
+      font-size: 14px;
+      color: var(--text-primary);
+      font-weight: 600;
+      line-height: 1.6;
+    }
+
+    .qa-answer-body {
+      padding: 0 24px 24px 70px;
+    }
+
+    .qa-answer-body p {
+      font-size: 13.5px;
+      color: var(--text-secondary);
+      line-height: 1.9;
+      margin-bottom: 12px;
+    }
+
+    /* ========== FORMULA BOX ========== */
+    .formula-box {
+      background: #0f1218;
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent-gold);
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin: 16px 0;
+      overflow-x: auto;
+    }
+
+    .formula-box.blue { border-left-color: var(--accent-blue); }
+    .formula-box.teal { border-left-color: var(--accent-teal); }
+    .formula-box.red { border-left-color: var(--accent-red); }
+
+    /* ========== TABLE ========== */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin: 16px 0;
+    }
+
+    .data-table th {
+      background: var(--bg-highlight);
+      color: var(--accent-gold);
+      font-weight: 600;
+      padding: 10px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-accent);
+      font-size: 12px;
+      letter-spacing: 0.04em;
+    }
+
+    .data-table td {
+      padding: 9px 14px;
+      border-bottom: 1px solid var(--border);
+      color: var(--text-secondary);
+      vertical-align: top;
+    }
+
+    .data-table tr:last-child td { border-bottom: none; }
+    .data-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+    .td-key {
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    /* ========== NOTE BOX ========== */
+    .note-box {
+      border-radius: 8px;
+      padding: 14px 18px;
+      margin: 16px 0;
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    .note-gold {
+      background: var(--glow-gold);
+      border: 1px solid var(--accent-gold-dim);
+      color: #d4b96a;
+    }
+
+    .note-blue {
+      background: var(--glow-blue);
+      border: 1px solid rgba(74, 158, 255, 0.25);
+      color: #6fb3ff;
+    }
+
+    .note-red {
+      background: rgba(248, 113, 113, 0.1);
+      border: 1px solid rgba(248, 113, 113, 0.25);
+      color: #f9a8a8;
+    }
+
+    .note-box strong {
+      font-weight: 700;
+    }
+
+    /* ========== TOPIC GRID ========== */
+    .topic-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+
+    .topic-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 18px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+    }
+
+    .topic-card:hover {
+      border-color: var(--border-accent);
+      background: var(--bg-card-hover);
+      transform: translateY(-2px);
+    }
+
+    .topic-card-icon {
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+
+    .topic-card-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+    }
+
+    .topic-card-desc {
+      font-size: 11.5px;
+      color: var(--text-dim);
+      line-height: 1.6;
+    }
+
+    .topic-card-count {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 2px 8px;
+      border-radius: 100px;
+      font-size: 10px;
+      font-weight: 700;
+      background: var(--bg-secondary);
+      color: var(--text-dim);
+      letter-spacing: 0.04em;
+    }
+
+    /* ========== INLINE CODE ========== */
+    code {
+      font-family: 'JetBrains Mono', monospace;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 1px 6px;
+      font-size: 12.5px;
+      color: var(--accent-teal);
+    }
+
+    /* ========== DIVIDER ========== */
+    .divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--border), transparent);
+      margin: 40px 0;
+    }
+
+    /* ========== BREADCRUMB / SCROLL TOP ========== */
+    .scroll-top {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      width: 44px;
+      height: 44px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-accent);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0;
+      transition: opacity 0.2s, background 0.2s;
+      z-index: 200;
+      font-size: 18px;
+      color: var(--text-secondary);
+      text-decoration: none;
+    }
+
+    .scroll-top.visible { opacity: 1; }
+    .scroll-top:hover { background: var(--bg-card-hover); color: var(--accent-gold); }
+
+    /* ========== KATEX OVERRIDE ========== */
+    .katex { font-size: 1.05em; color: var(--text-primary); }
+    .katex-display { overflow-x: auto; padding: 4px 0; }
+
+    /* ========== SCROLLBAR ========== */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-primary); }
+    ::-webkit-scrollbar-thumb { background: var(--border-accent); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--text-dim); }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 900px) {
+      .sidebar { display: none; }
+      .main { margin-left: 0; padding: 0 20px 60px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="sidebar-logo">
+    <h1>統計検定2級<br>学習ノート</h1>
+    <p>過去の質疑応答アーカイブ</p>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">概要</div>
+    <a href="#overview" class="sidebar-link">📊 トップ &amp; 統計</a>
+    <a href="#faq" class="sidebar-link">❓ よくあった質問</a>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">基礎・推定論</div>
+    <a href="#estimation" class="sidebar-link">推定の基礎（不偏性・一致性）</a>
+    <a href="#unbiased-variance" class="sidebar-link">不偏分散と自由度</a>
+    <a href="#se" class="sidebar-link">標準誤差（SE）の計算</a>
+    <a href="#confidence-interval" class="sidebar-link">信頼区間</a>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">仮説検定</div>
+    <a href="#test-stat" class="sidebar-link">検定統計量の構造</a>
+    <a href="#proportion-test" class="sidebar-link">母比率の検定</a>
+    <a href="#mean-test" class="sidebar-link">母平均の差の検定</a>
+    <a href="#distributions" class="sidebar-link">分布の使い分け</a>
+    <a href="#chi2" class="sidebar-link">カイ二乗検定</a>
+    <a href="#f-dist" class="sidebar-link">F分布と等分散検定</a>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">分散分析・回帰</div>
+    <a href="#anova" class="sidebar-link">分散分析（ANOVA）</a>
+    <a href="#regression" class="sidebar-link">回帰分析</a>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">その他</div>
+    <a href="#misc" class="sidebar-link">雑多なQ&amp;A</a>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- HERO -->
+  <div class="hero" id="overview">
+    <div class="hero-badge">📚 Study Archive</div>
+    <h1>統計検定2級<br><span>学習 Q&amp;A アーカイブ</span></h1>
+    <p class="hero-desc">
+      過去の質疑応答をトピック別に整理したリファレンスです。
+      よく質問していたテーマは「よくあった質問」としてまとめています。
+      数式は LaTeX で正確に記述されています。
+    </p>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">25+</div>
+        <div class="stat-label">総会話セッション</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">8</div>
+        <div class="stat-label">主要トピック</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">5</div>
+        <div class="stat-label">よくあった質問</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOPIC MAP -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-icon icon-blue">🗺️</div>
+      <div>
+        <div class="section-title">トピックマップ</div>
+        <div class="section-sub">クリックで該当セクションへジャンプ</div>
+      </div>
+    </div>
+    <div class="topic-grid">
+      <a href="#estimation" class="topic-card">
+        <div class="topic-card-icon">⚖️</div>
+        <div class="topic-card-title">推定の基礎</div>
+        <div class="topic-card-desc">不偏性・一致性・MSE・確率収束</div>
+        <span class="topic-card-count">4 Q&amp;A</span>
+      </a>
+      <a href="#unbiased-variance" class="topic-card">
+        <div class="topic-card-icon">📐</div>
+        <div class="topic-card-title">不偏分散と自由度</div>
+        <div class="topic-card-desc">なぜ n-1 で割るのか</div>
+        <span class="topic-card-count">5 Q&amp;A</span>
+      </a>
+      <a href="#se" class="topic-card">
+        <div class="topic-card-icon">📏</div>
+        <div class="topic-card-title">標準誤差（SE）</div>
+        <div class="topic-card-desc">使い分けのポイント</div>
+        <span class="topic-card-count">6 Q&amp;A</span>
+      </a>
+      <a href="#test-stat" class="topic-card">
+        <div class="topic-card-icon">🔬</div>
+        <div class="topic-card-title">検定統計量の構造</div>
+        <div class="topic-card-desc">分子・分母が表すもの</div>
+        <span class="topic-card-count">3 Q&amp;A</span>
+      </a>
+      <a href="#chi2" class="topic-card">
+        <div class="topic-card-icon">χ²</div>
+        <div class="topic-card-title">カイ二乗検定</div>
+        <div class="topic-card-desc">適合度・独立性・期待度数</div>
+        <span class="topic-card-count">7 Q&amp;A</span>
+      </a>
+      <a href="#anova" class="topic-card">
+        <div class="topic-card-icon">📊</div>
+        <div class="topic-card-title">分散分析（ANOVA）</div>
+        <div class="topic-card-desc">水準・平方和・F統計量</div>
+        <span class="topic-card-count">5 Q&amp;A</span>
+      </a>
+      <a href="#regression" class="topic-card">
+        <div class="topic-card-icon">📈</div>
+        <div class="topic-card-title">回帰分析</div>
+        <div class="topic-card-desc">OLS・決定係数・t検定</div>
+        <span class="topic-card-count">5 Q&amp;A</span>
+      </a>
+      <a href="#distributions" class="topic-card">
+        <div class="topic-card-icon">🎲</div>
+        <div class="topic-card-title">分布の使い分け</div>
+        <div class="topic-card-desc">z / t / χ² / F の選択</div>
+        <span class="topic-card-count">4 Q&amp;A</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- ====== FAQ ====== -->
+  <div class="section" id="faq">
+    <div class="section-header">
+      <div class="section-icon icon-red">❓</div>
+      <div>
+        <div class="section-title">よくあった質問</div>
+        <div class="section-sub">複数回にわたって繰り返し確認していたテーマ</div>
+      </div>
+    </div>
+
+    <div class="faq-grid">
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-badge badge-hot">最頻出</span>
+          <span class="faq-question-text">SEの計算に使う比率は「標本比率」か「帰無仮説の値」か？</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-answer">
+          <p><strong>判断基準は「帰無仮説が母比率の具体的な値を与えているか」だけ。</strong></p>
+          <table class="data-table" style="margin:16px 0">
+            <tr><th>検定の種類</th><th>帰無仮説</th><th>SEに使う値</th></tr>
+            <tr><td class="td-key">1標本の母比率検定</td><td>\(H_0: p = p_0\)</td><td>\(p_0\)（具体値が与えられる）</td></tr>
+            <tr><td class="td-key">2標本の差の検定</td><td>\(H_0: p_1 - p_2 = 0\)</td><td>\(\hat{p}_1, \hat{p}_2\)（値は未知）</td></tr>
+            <tr><td class="td-key">区間推定</td><td>—（仮説なし）</td><td>\(\hat{p}\)（標本比率）</td></tr>
+          </table>
+          <div class="formula-box">
+            <p>1標本検定：\( \displaystyle Z = \frac{\hat{p} - p_0}{\sqrt{\dfrac{p_0(1-p_0)}{n}}} \)</p>
+          </div>
+          <div class="formula-box blue">
+            <p>2標本差の検定：\( \displaystyle Z = \frac{\hat{p}_1 - \hat{p}_2}{\sqrt{\dfrac{\hat{p}_1(1-\hat{p}_1)}{n_1} + \dfrac{\hat{p}_2(1-\hat{p}_2)}{n_2}}} \)</p>
+          </div>
+          <p>「5%と宣言しているのにSEに使わないの？」という混乱が多発したが、問題文の背景情報は帰無仮説ではない。<strong>帰無仮説の数式に書かれた命題だけを根拠にする。</strong></p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-badge badge-hot">頻出</span>
+          <span class="faq-question-text">なぜ不偏分散の分母は n ではなく n-1 なのか？</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-answer">
+          <p>結論：<strong>「偏差平方和をその自由度で割ったもの」が不偏分散</strong>、という理解で正しい。</p>
+          <p>\(\bar{X}\) を使って偏差を計算すると、\(\sum_{i=1}^n (X_i - \bar{X}) = 0\) という拘束条件が1つ生じる。つまり n 個の偏差のうち最後の1個は自動的に決まり、<strong>自由に動ける次元数 = n-1</strong>（自由度）となる。</p>
+          <div class="formula-box">
+            <p>\( \displaystyle E\!\left[\sum_{i=1}^n (X_i - \bar{X})^2\right] = (n-1)\sigma^2 \)</p>
+          </div>
+          <p>これを \(n-1\) で割ると \(E[S^2] = \sigma^2\) が成立し、不偏推定量となる。\(n\) で割ると \(\frac{n-1}{n}\sigma^2\) になり過小推定になってしまう。</p>
+          <div class="note-box note-gold">
+            <strong>一般則：</strong>パラメータを k 個推定すると自由度は n-k だけ減る。
+          </div>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-badge badge-key">重要</span>
+          <span class="faq-question-text">検定統計量（分子÷分母）は何を表しているのか？</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-answer">
+          <p>統計量は「<strong>帰無仮説の世界から、観測された標本はどれだけ離れているかを標準偏差単位で測ったもの</strong>」。</p>
+          <div class="formula-box">
+            <p>\( \displaystyle Z = \frac{\underbrace{\hat{\theta} - \theta_0}_{\text{ズレの大きさ（生の差）}}}{\underbrace{SE}_{\text{そのズレの「ものさし」}}} \)</p>
+          </div>
+          <p>分子だけだとズレが大きいのか小さいのか判断できない。SEで割ることで「そのズレが驚くべきものかどうかの基準」を与える。</p>
+          <p>一般形：\(\hat{y} = SE(y) \cdot z + y_0\) として、ベースとなる確率分布に従う変数 z が標準偏差によって母数のスケールに変換され、真値に加算されたものが推定量という理解が正しい。</p>
+          <table class="data-table" style="margin:14px 0">
+            <tr><th>検定</th><th>z の従う分布</th></tr>
+            <tr><td>母比率・母平均（n大）</td><td>\(z \sim N(0,1)\)</td></tr>
+            <tr><td>母平均（\(\sigma\) 未知）</td><td>\(z \sim t(n-1)\)</td></tr>
+            <tr><td>母分散</td><td>\(z \sim \chi^2(n-1)\)</td></tr>
+            <tr><td>分散の比</td><td>\(z \sim F(m,n)\)</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-badge badge-key">重要</span>
+          <span class="faq-question-text">母集団が正規分布なのに検定ではなぜ t 分布を使うのか？</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-answer">
+          <p>核心は「<strong>\(\sigma\)（母標準偏差）が未知</strong>」であること。</p>
+          <table class="data-table" style="margin:14px 0">
+            <tr><th>条件</th><th>統計量</th><th>分布</th></tr>
+            <tr><td>\(\sigma\) 既知</td><td>\(\displaystyle Z = \frac{\bar{X} - \mu}{\sigma/\sqrt{n}}\)</td><td>\(N(0,1)\)（z検定）</td></tr>
+            <tr><td>\(\sigma\) 未知</td><td>\(\displaystyle T = \frac{\bar{X} - \mu}{s/\sqrt{n}}\)</td><td>\(t(n-1)\)（t検定）</td></tr>
+          </table>
+          <p>\(s\)（標本標準偏差）はサンプルごとにブレる確率変数。\(\sigma\) の代わりに \(s\) を使うと分母が確率的に動き、裾が正規分布より重くなる → これが t 分布の正体。</p>
+          <div class="formula-box">
+            <p>\( \displaystyle T = \frac{Z}{\sqrt{\chi^2(n-1)/(n-1)}} \sim t(n-1) \)</p>
+          </div>
+          <p>\(n \to \infty\) で \(s \to \sigma\) となるため \(t(n-1) \to N(0,1)\)。<strong>「母集団が正規分布に従う」と「検定統計量が正規分布に従う」は別の話。</strong></p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-question" onclick="toggleFaq(this)">
+          <span class="faq-badge badge-hot">頻出</span>
+          <span class="faq-question-text">信頼区間の正確な意味とは？「95%の確率で母数がこの区間に入る」は誤り？</span>
+          <svg class="faq-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="faq-answer">
+          <p>よくある誤解：「母数 \(\mu\) が95%の確率でこの区間に入っている」</p>
+          <div class="note-box note-red">
+            ❌ 母数 \(\mu\) は固定された定数。確率的に動くものではない。
+          </div>
+          <div class="note-box note-blue">
+            ✅ 正確：「<strong>この手順で区間を作れば、95%の割合で母数を含む区間が得られる</strong>」
+          </div>
+          <p>何が動くのか：母数 \(\mu\) は固定、<strong>区間の方が標本ごとに動く</strong>。</p>
+          <p>信頼区間に 0 が含まれない場合 → 帰無仮説 \(H_0: \theta = 0\) の棄却と同値（有意水準 \(\alpha\) と信頼係数 \(1-\alpha\) は表裏一体）。</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ====== 推定の基礎 ====== -->
+  <div class="section" id="estimation">
+    <div class="section-header">
+      <div class="section-icon icon-gold">⚖️</div>
+      <div>
+        <div class="section-title">推定の基礎（不偏性・一致性）</div>
+        <div class="section-sub">推定量の性質に関するQ&amp;A</div>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-header">
+        <div class="qa-avatar avatar-q">Q</div>
+        <div>
+          <div class="qa-content-label">質問</div>
+          <div class="qa-text">不偏性と一致性の違いは？</div>
+        </div>
+      </div>
+      <div class="qa-answer-body">
+        <div class="qa-header" style="padding:0 0 12px;">
+          <div class="qa-avatar avatar-a">A</div>
+          <div><div class="qa-content-label">回答</div></div>
+        </div>
+        <table class="data-table">
+          <tr><th></th><th>不偏性</th><th>一致性</th></tr>
+          <tr><td class="td-key">n</td><td>固定</td><td>\(\to \infty\)</td></tr>
+          <tr><td class="td-key">対象</td><td>\(E[\hat{\theta}]\)（期待値）</td><td>\(\hat{\theta}_n\)（推定量そのもの）</td></tr>
+          <tr><td class="td-key">条件</td><td>\(E[\hat{\theta}] = \theta\)</td><td>\(P(|\hat{\theta}_n - \theta| > \varepsilon) \to 0\)</td></tr>
+        </table>
+        <div class="note-box note-gold" style="margin-top:14px">
+          <strong>独立した概念：</strong>\(\hat{\mu} = \frac{1}{2}(X_1 + X_n)\) は不偏だが一致推定量でない例。\(\text{Var}(\hat{\mu}) = \frac{\sigma^2}{2}\) は n によらず 0 に収束しない。
+        </div>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-header">
+        <div class="qa-avatar avatar-q">Q</div>
+        <div>
+          <div class="qa-content-label">質問</div>
+          <div class="qa-text">一致性の確認でなぜ分散を求めるのか？</div>
+        </div>
+      </div>
+      <div class="qa-answer-body">
+        <div class="qa-header" style="padding:0 0 12px;">
+          <div class="qa-avatar avatar-a">A</div>
+          <div><div class="qa-content-label">回答</div></div>
+        </div>
+        <p>チェビシェフの不等式を利用するため：</p>
+        <div class="formula-box">
+          <p>\( P(|\hat{\theta} - E[\hat{\theta}]| \geq \varepsilon) \leq \dfrac{\text{Var}(\hat{\theta})}{\varepsilon^2} \)</p>
+        </div>
+        <p>不偏推定量（\(E[\hat{\theta}] = \theta\)）のとき、\(\text{Var}(\hat{\theta}) \to 0\) ならはさみうちの原理より確率収束が示せる。分散を求めるのは<strong>チェビシェフの不等式を通じて確率収束を保証するため。</strong></p>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-header">
+        <div class="qa-avatar avatar-q">Q</div>
+        <div>
+          <div class="qa-content-label">質問</div>
+          <div class="qa-text">\(\xrightarrow{p}\) は何を表すか？他の収束記号との違いは？</div>
+        </div>
+      </div>
+      <div class="qa-answer-body">
+        <div class="qa-header" style="padding:0 0 12px;">
+          <div class="qa-avatar avatar-a">A</div>
+          <div><div class="qa-content-label">回答</div></div>
+        </div>
+        <table class="data-table">
+          <tr><th>記号</th><th>名称</th><th>意味</th></tr>
+          <tr><td class="td-key">\(\xrightarrow{p}\)</td><td>確率収束</td><td>真値からズレる<strong>確率</strong>が0へ</td></tr>
+          <tr><td class="td-key">\(\xrightarrow{d}\)</td><td>分布収束</td><td><strong>分布</strong>が特定の分布に近づく</td></tr>
+          <tr><td class="td-key">\(\xrightarrow{a.s.}\)</td><td>概収束</td><td>ほぼ確実に（強い意味で）収束</td></tr>
+        </table>
+        <div class="formula-box teal" style="margin-top:14px">
+          <p>大数の法則：\(\bar{X} \xrightarrow{p} \mu\)</p>
+          <p>中心極限定理：\(\dfrac{\bar{X} - \mu}{\sigma/\sqrt{n}} \xrightarrow{d} N(0,1)\)</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ====== 不偏分散と自由度 ====== -->
+  <div class="section" id="unbiased-variance">
+    <div class="section-header">
+      <div class="section-icon icon-teal">📐</div>
+      <div>
+        <div class="section-title">不偏分散と自由度</div>
+        <div class="section-sub">分散の導出と自由度の正確な理解</div>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-header">
+        <div class="qa-avatar avatar-q">Q</div>
+        <div>
+          <div class="qa-content-label">質問</div>
+          <div class="qa-text">偏差平方和の期待値から不偏分散を導出する過程を教えて</div>
+        </div>
+      </div>
+      <div class="qa-answer-body">
+        <div class="qa-header" style="padding:0 0 12px;">
+          <div class="qa-avatar avatar-a">A</div>
+          <div><div class="qa-content-label">回答</div></div>
+        </div>
+        <p><strong>Step 1</strong>：\(X_i - \bar{X} = (X_i - \mu) - (\bar{X} - \mu)\) と書き直す</p>
+        <p><strong>Step 2</strong>：展開と和を取ると</p>
+        <div class="formula-box">
+          <p>\( \displaystyle \sum_{i=1}^n(X_i-\bar{X})^2 = \sum_{i=1}^n(X_i-\mu)^2 - n(\bar{X}-\mu)^2 \)</p>
+        </div>
+        <p><strong>Step 3</strong>：期待値を取ると</p>
+        <div class="formula-box">
+          <p>\( \displaystyle E\!\left[\sum_{i=1}^n(X_i-\bar{X})^2\right] = n\sigma^2 - \sigma^2 = (n-1)\sigma^2 \)</p>
+        </div>
+        <p><strong>Step 4</strong>：\(n-1\) で割ると \(E[S^2] = \sigma^2\)（不偏推定量）</p>
+        <div class="formula-box teal">
+          <p>\( \displaystyle S^2 = \frac{1}{n-1}\sum_{i=1}^n(X_i-\bar{X})^2 \)</p>
+        </div>
+        <p><code>なぜ μ に分解するのか</code>：\(\bar{X}\) は全ての \(X_i\) に依存するため \(E[(X_i - \bar{X})^2]\) の直接計算は共分散が絡んで複雑。\(\mu\) を挟んで分解することで既知の形 \(\sigma^2, \sigma^2/n\) に持ち込める。</p>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-header">
+        <div class="qa-avatar avatar-q">Q</div>
+        <div>
+          <div class="qa-content-label">質問</div>
+          <div class="qa-text">χ² 統計量の自由度が n-1 になるのはなぜ？母平均・母分散が既知なら n になる？</div>
+        </div>
+      </div>
+      <div class="qa-answer-body">
+        <div class="qa-header" style="padding:0 0 12px;">
+          <div class="qa-avatar avatar-a">A</div>
+          <div><div class="qa-content-label">回答</div></div>
+        </div>
+        <table class="data-table">
+          <tr><th>状況</th><th>推定パラメータ数</th><th>自由度</th></tr>
+          <tr><td class="td-key">\(\mu, \sigma\) が既知</td><td>0個</td><td>\(n\)</td></tr>
+          <tr><td class="td-key">\(\mu, \sigma\) が未知（\(\bar{X}, s\) で代用）</td><td>1個（\(\mu\) を推定）</td><td>\(n-1\)</td></tr>
+        </table>
+        <div class="note-box note-blue" style="margin-top:12px">
+          <strong>ポイント：</strong>パラメータを推定するたびに拘束条件が1つ増え、自由度が1つ減る。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ====== SE ====== -->
+  <div class="section" id="se">
+    <div class="section-header">
+      <div class="section-icon icon-gold">📏</div>
+      <div>
+        <div class="section-title">標準誤差（SE）の計算</div>
+        <div class="section-sub">seとは標準誤差（Standard Error）のこと</div>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-header">
+        <div class="qa-avatar avatar-q">Q</div>
+        <div>
+          <div class="qa-content-label">質問</div>
+          <div class="qa-text">母平均の標準誤差の正しい計算式は？</div>
+        </div>
+      </div>
+      <div class="qa-answer-body">
+        <div class="qa-header" style="padding:0 0 12px;">
+          <div class="qa-avatar avatar-a">A</div>
+          <div><div class="qa-content-label">回答</div></div>
+        </div>
+        <div class="formula-box">
+          <p>\( \displaystyle \text{se}(\hat{\mu}) = \sqrt{\text{Var}[\bar{X}]} = \sqrt{\frac{\sigma^2}{n}} = \frac{\sigma}{\sqrt{n}} \approx \frac{\hat{s}}{\sqrt{n}} \)</p>
+        </div>
+        <div class="note-box note-red">
+          ❌ よくある誤り：\(\dfrac{\hat{s}}{n}\)（分母が \(n\)）→ 正しくは \(\dfrac{\hat{s}}{\sqrt{n}}\)（\(\sqrt{n}\)）
+        </div>
+        <p>導出：\(\text{Var}[\bar{X}] = \dfrac{\sigma^2}{n}\) の平方根を取るため分母は \(\sqrt{n}\)。\(\text{Var}\) に \(\sqrt{}\) をかぶせると \(\text{se}\) になるので \(n\) も \(\sqrt{}\) の中に入る。</p>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-header">
+        <div class="qa-avatar avatar-q">Q</div>
+        <div>
+          <div class="qa-content-label">質問</div>
+          <div class="qa-text">層化抽出でSEを計算する場合、普通の \(SE = \sigma/\sqrt{n}\) とは異なるのか？</div>
+        </div>
+      </div>
+      <div class="qa-answer-body">
+        <div class="qa-header" style="padding:0 0 12px;">
+          <div class="qa-avatar avatar-a">A</div>
+          <div><div class="qa-content-label">回答</div></div>
+        </div>
+        <p>\(SE = \sigma/\sqrt{n}\) は「<strong>一つの均質な母集団から n 個サンプリング</strong>」した場合。2つの異なる母集団から別々にサンプリングした加重平均の場合は<strong>分散の伝播則</strong>を適用する。</p>
+        <div class="formula-box">
+          <p>\( \hat{p} = w_1 \hat{p}_1 + w_2 \hat{p}_2 \)（\(w_i = N_i / (N_1+N_2)\)）</p>
+        </div>
+        <div class="formula-box blue">
+          <p>\( \displaystyle SE = \sqrt{w_1^2 \cdot \frac{\hat{p}_1(1-\hat{p}_1)}{n_1} + w_2^2 \cdot \frac{\hat{p}_2(1-\hat{p}_2)}{n_2}} \)</p>
+        </div>
+        <div class="note-box note-gold">
+          <strong>重要：</strong>加重平均の分散 ≠ 分散の加重平均。ウェイトは<strong>2乗</strong>されて分散に掛かる。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ====== 信頼区間 ====== -->
+  <div class="section" id="confidence-interval">
+    <div class="section-header">
+      <div class="section-icon icon-blue">📦</div>
+      <div>
+        <div class="section-title">信頼区間</div>
+        <div class="section-sub">区間推定の正確な解釈と計算</div>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-header">
+        <div class="qa-avatar avatar-q">Q</div>
+        <div>
+          <div class="qa-content-label">質問</div>
+          <div class="qa-text">「信頼区間の幅が6%以下」とはどういう意味か？</div>
+        </div>
+      </div>
+      <div class="qa-answer-body">
+        <div class="qa-header" style="padding:0 0 12px;">
+          <div class="qa-avatar avatar-a">A</div>
+          <div><div class="qa-content-label">回答</div></div>
+        </div>
+        <p>95%信頼区間の幅：</p>
+        <div class="formula-box">
+          <p>\( \displaystyle \text{幅} = 2 \times 1.96\sqrt{\frac{\hat{p}(1-\hat{p})}{n}} \leq 0.06 \)</p>
+        </div>
+        <p>幅の最大値は 1（\(p\) の取りうる範囲 0〜1 の全体）。「幅6%以下」とは\(p\)の全範囲のうち6%分の狭い範囲に絞り込めているという意味。これは<strong>必要な標本サイズ n を求める</strong>ための指標として使われる。</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ====== 検定統計量 ====== -->
+  <div class="section" id="test-stat">
+    <div class="section-header">
+      <div class="section-icon icon-blue">🔬</div>
+      <div>
+        <div class="section-title">検定統計量の構造</div>
+        <div class="section-sub">分子・分母それぞれが意味するもの</div>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-header">
+        <div class="qa-avatar avatar-q">Q</div>
+        <div>
+          <div class="qa-content-label">質問</div>
+          <div class="qa-text">統計量の分子は「推定値 - 真値」か「真値 - 推定値」か？</div>
+        </div>
+      </div>
+      <div class="qa-answer-body">
+        <div class="qa-header" style="padding:0 0 12px;">
+          <div class="qa-avatar avatar-a">A</div>
+          <div><div class="qa-content-label">回答</div></div>
+        </div>
+        <div class="formula-box">
+          <p>\( \displaystyle Z = \frac{\hat{\theta} - \theta_0}{SE} \)</p>
+        </div>
+        <p><strong>推定値 − 帰無仮説値</strong>が標準的。この向きにすると棄却域の方向（両側・右片側・左片側）と統計量の符号が直感と一致する。</p>
+        <div class="note-box note-blue">
+          両側検定では符号が逆になっても \(|Z|\) で判断するため結果は同じ。符号が問題になるのは<strong>片側検定</strong>のみ。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ====== 母比率 ====== -->
+  <div class="section" id="proportion-test">
+    <div class="section-header">
+      <div class="section-icon icon-teal">🔢</div>
+      <div>
+        <div class="section-title">母比率の検定</div>
+        <div class="section-sub">1標本・2標本、信頼区間との違い</div>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-header">
+        <div class="qa-avatar avatar-q">Q</div>
+        <div>
+          <div class="qa-content-label">質問</div>
+          <div class="qa-text">d=0 の帰無仮説が棄却されなかった場合、母比率が両方とも0.05であることが保証されるか？</div>
+        </div>
+      </div>
+      <div class="qa-answer-body">
+        <div class="qa-header" style="padding:0 0 12px;">
+          <div class="qa-avatar avatar-a">A</div>
+          <div><div class="qa-content-label">回答</div></div>
+        </div>
+        <p><strong>保証されない。</strong></p>
+        <table class="data-table">
+          <tr><th>命題</th><th>保証？</th></tr>
+          <tr><td>\(p_A - p_B = 0\) を棄却できなかった</td><td class="td-key">✅ これだけ</td></tr>
+          <tr><td>\(p_A = p_B\) である</td><td>❌（棄却しなかっただけ）</td></tr>
+          <tr><td>\(p_A = p_B = 0.05\) である</td><td>❌❌</td></tr>
+        </table>
+        <div class="note-box note-gold" style="margin-top:12px">
+          <strong>原則：棄却しなかった ≠ 帰無仮説が正しい</strong><br>
+          棄却は「積極的な証拠」、非棄却は「証拠不十分」に過ぎない。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ====== 母平均の差の検定 ====== -->
+  <div class="section" id="mean-test">
+    <div class="section-header">
+      <div class="section-icon icon-blue">⚡</div>
+      <div>
+        <div class="section-title">母平均の差の検定</div>
+        <div class="section-sub">プール分散・Welch・2標本t検定</div>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-header">
+        <div class="qa-avatar avatar-q">Q</div>
+        <div>
+          <div class="qa-content-label">質問</div>
+          <div class="qa-text">等分散・非等分散のt検定の違いは？</div>
+        </div>
+      </div>
+      <div class="qa-answer-body">
+        <div class="qa-header" style="padding:0 0 12px;">
+          <div class="qa-avatar avatar-a">A</div>
+          <div><div class="qa-content-label">回答</div></div>
+        </div>
+        <table class="data-table">
+          <tr><th></th><th>通常の2標本t検定</th><th>Welchのt検定</th></tr>
+          <tr><td class="td-key">前提</td><td>\(\sigma_1^2 = \sigma_2^2\)</td><td>\(\sigma_1^2 \neq \sigma_2^2\)</td></tr>
+          <tr><td class="td-key">分散</td><td>プール分散 \(s_p^2\)</td><td>各群の \(s_1^2, s_2^2\)</td></tr>
+          <tr><td class="td-key">自由度</td><td>\(n_1 + n_2 - 2\)</td><td>\(\nu\)（Satterthwaite近似）</td></tr>
+        </table>
+        <div class="formula-box" style="margin-top:14px">
+          <p>プール分散：\( \displaystyle s_p^2 = \frac{(n_1-1)s_1^2 + (n_2-1)s_2^2}{n_1+n_2-2} \)</p>
+        </div>
+        <div class="formula-box blue">
+          <p>等分散t統計量：\( \displaystyle t = \frac{\bar{X}_1 - \bar{X}_2}{\sqrt{s_p^2\!\left(\dfrac{1}{n_1}+\dfrac{1}{n_2}\right)}} \)</p>
+        </div>
+        <div class="note-box note-gold">
+          <strong>実務の流れ：</strong>まずF検定で等分散を確認 → 棄却できない場合は通常t検定、棄却できた場合はWelchのt検定。
+        </div>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-header">
+        <div class="qa-avatar avatar-q">Q</div>
+        <div>
+          <div class="qa-content-label">質問</div>
+          <div class="qa-text">プール分散はなぜ精度が上がるのか？</div>
+        </div>
+      </div>
+      <div class="qa-answer-body">
+        <div class="qa-header" style="padding:0 0 12px;">
+          <div class="qa-avatar avatar-a">A</div>
+          <div><div class="qa-content-label">回答</div></div>
+        </div>
+        <p>母分散が等しいという条件があるなら、2つの標本は同じ \(\sigma^2\) についての情報を持っている。合計 \(n_1 + n_2\) 個の情報を使って \(\sigma^2\) を推定できるため、推定の分散（ばらつき）が小さくなる。</p>
+        <div class="formula-box">
+          <p>\( E[s_p^2] = \sigma^2 \)（不偏性が保たれる）</p>
+        </div>
+        <div class="note-box note-red">
+          <strong>注意：</strong>\(n_1 = n_2\) のとき \(s_p^2 = (s_1^2 + s_2^2)/2\)（単純平均）。\(n_1 \neq n_2\) のときはサイズが大きい方の分散に引き寄せられる。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ====== 分布の使い分け ====== -->
+  <div class="section" id="distributions">
+    <div class="section-header">
+      <div class="section-icon icon-purple">🎲</div>
+      <div>
+        <div class="section-title">分布の使い分け</div>
+        <div class="section-sub">z / t / χ² / F の選択基準</div>
+      </div>
+    </div>
+
+    <table class="data-table">
+      <tr><th>知りたいもの</th><th>条件</th><th>使う分布</th><th>自由度</th></tr>
+      <tr><td class="td-key">母平均 \(\mu\)</td><td>\(\sigma^2\) 既知</td><td>\(N(0,1)\)（z検定）</td><td>—</td></tr>
+      <tr><td class="td-key">母平均 \(\mu\)</td><td>\(\sigma^2\) 未知</td><td>\(t\) 分布</td><td>\(n-1\)</td></tr>
+      <tr><td class="td-key">母分散 \(\sigma^2\)</td><td>\(\mu\) 未知</td><td>\(\chi^2\) 分布</td><td>\(n-1\)</td></tr>
+      <tr><td class="td-key">2母分散の比</td><td>両方未知</td><td>\(F\) 分布</td><td>\((n_1-1, n_2-1)\)</td></tr>
+      <tr><td class="td-key">母比率 \(p\)</td><td>\(n\) が大（\(np \geq 5\)）</td><td>正規近似 \(N(0,1)\)</td><td>—</td></tr>
+    </table>
+
+    <div class="qa-card" style="margin-top:20px">
+      <div class="qa-header">
+        <div class="qa-avatar avatar-q">Q</div>
+        <div>
+          <div class="qa-content-label">質問</div>
+          <div class="qa-text">χ² と F は「右側のみ」で検定する理由は？F で両側検定はできないか？</div>
+        </div>
+      </div>
+      <div class="qa-answer-body">
+        <div class="qa-header" style="padding:0 0 12px;">
+          <div class="qa-avatar avatar-a">A</div>
+          <div><div class="qa-content-label">回答</div></div>
+        </div>
+        <p>χ² と F は「二乗に由来する統計量」であるため常に非負。<strong>「右側のみ」は多くの場合に当てはまるが、検定の目的によって両側検定も成立する。</strong></p>
+        <table class="data-table">
+          <tr><th>文脈</th><th>検定の種類</th><th>理由</th></tr>
+          <tr><td class="td-key">適合度検定・独立性検定</td><td>右側のみ</td><td>「ズレが大きいか」だけが問題</td></tr>
+          <tr><td class="td-key">分散分析（ANOVA）</td><td>右側のみ</td><td>「群間 &gt; 群内か」だけが問題</td></tr>
+          <tr><td class="td-key">等分散検定（F検定）</td><td><strong>両側</strong>も可</td><td>\(\sigma_1^2 \neq \sigma_2^2\) を検出したい</td></tr>
+        </table>
+        <div class="formula-box blue">
+          <p>自由度 \((1, m)\) の F 分布と t 分布の関係：\(T \sim t(m) \Rightarrow T^2 \sim F(1, m)\)</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ====== カイ二乗検定 ====== -->
+  <div class="section" id="chi2">
+    <div class="section-header">
+      <div class="section-icon icon-red">χ²</div>
+      <div>
+        <div class="section-title">カイ二乗検定</div>
+        <div class="section-sub">適合度検定・独立性検定・期待度数の計算</div>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-header">
+        <div class="qa-avatar avatar-q">Q</div>
+        <div>
+          <div class="qa-content-label">質問</div>
+          <div class="qa-text">χ² という記号の「χ」と「²」にはどんな意味があるのか？</div>
+        </div>
+      </div>
+      <div class="qa-answer-body">
+        <div class="qa-header" style="padding:0 0 12px;">
+          <div class="qa-avatar avatar-a">A</div>
+          <div><div class="qa-content-label">回答</div></div>
+        </div>
+        <p><strong>χ（カイ）</strong>：ピアソンが使った記号（慣習）。特別な意味はない。</p>
+        <p><strong>²（二乗）</strong>：三つの視点から理解できる：</p>
+        <div class="formula-box">
+          <p>①ズレを正にする：\((O_i - E_i)^2 \geq 0\)</p>
+          <p>②標準正規変数との関係：\(\chi^2(k) = Z_1^2 + Z_2^2 + \cdots + Z_k^2\)</p>
+          <p>③標準化されたズレの二乗和：\(\left(\dfrac{O_i - E_i}{\sqrt{E_i}}\right)^2\)（Pearson残差の二乗）</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-header">
+        <div class="qa-avatar avatar-q">Q</div>
+        <div>
+          <div class="qa-content-label">質問</div>
+          <div class="qa-text">期待度数の求め方と「E_i ≥ 5」の条件の理由は？</div>
+        </div>
+      </div>
+      <div class="qa-answer-body">
+        <div class="qa-header" style="padding:0 0 12px;">
+          <div class="qa-avatar avatar-a">A</div>
+          <div><div class="qa-content-label">回答</div></div>
+        </div>
+        <div class="formula-box">
+          <p>2元クロス集計表の期待度数：\( \displaystyle E_{ij} = \frac{n_{i\cdot} \times n_{\cdot j}}{n} \)</p>
+        </div>
+        <p><code>E_i ≥ 5</code> の条件理由：\(E_i\) が小さいと \((O_i - E_i)^2 / E_i\) が不安定に大きくなりやすく、χ² 分布への近似が悪化する。</p>
+        <p>違反した場合：隣のカテゴリと<strong>統合（マージ）</strong>し、自由度も再計算する。</p>
+        <table class="data-table" style="margin-top:14px">
+          <tr><th>検定の種類</th><th>自由度</th></tr>
+          <tr><td class="td-key">適合度検定（分布完全指定）</td><td>\(k-1\)</td></tr>
+          <tr><td class="td-key">適合度検定（正規分布、\(\mu, \sigma^2\) 推定）</td><td>\(k-3\)</td></tr>
+          <tr><td class="td-key">適合度検定（ポアソン、\(\lambda\) 推定）</td><td>\(k-2\)</td></tr>
+          <tr><td class="td-key">独立性検定（r×c 分割表）</td><td>\((r-1)(c-1)\)</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ====== F 分布 ====== -->
+  <div class="section" id="f-dist">
+    <div class="section-header">
+      <div class="section-icon icon-purple">F</div>
+      <div>
+        <div class="section-title">F 分布と等分散検定</div>
+        <div class="section-sub">F 統計量の定義と信頼区間との関係</div>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-header">
+        <div class="qa-avatar avatar-q">Q</div>
+        <div>
+          <div class="qa-content-label">質問</div>
+          <div class="qa-text">\([1/F(m,n), F(n,m)]\) という形で信頼区間を推定できる。これは両側検定ではないのか？</div>
+        </div>
+      </div>
+      <div class="qa-answer-body">
+        <div class="qa-header" style="padding:0 0 12px;">
+          <div class="qa-avatar avatar-a">A</div>
+          <div><div class="qa-content-label">回答</div></div>
+        </div>
+        <p><strong>ご指摘は正しい。</strong>F統計量は非負だが、<strong>「非負であること」と「両側検定ができないこと」は別の話。</strong></p>
+        <p>等分散検定（\(H_0: \sigma_1^2 = \sigma_2^2\)）では「比が1より大きいか小さいかに関心がある」ため両側検定が成立する。</p>
+        <div class="formula-box">
+          <p>両側検定の棄却域：\(F < \dfrac{1}{F_{\alpha/2}(n,m)}\) または \(F > F_{\alpha/2}(m,n)\)</p>
+        </div>
+        <div class="note-box note-gold">
+          「F検定は右側のみ」という説明は不正確。<strong>検定の目的によって両側検定も成立する。</strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ====== ANOVA ====== -->
+  <div class="section" id="anova">
+    <div class="section-header">
+      <div class="section-icon icon-teal">📊</div>
+      <div>
+        <div class="section-title">分散分析（ANOVA）</div>
+        <div class="section-sub">水準・平方和の分解・F統計量</div>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-header">
+        <div class="qa-avatar avatar-q">Q</div>
+        <div>
+          <div class="qa-content-label">質問</div>
+          <div class="qa-text">分散分析の考え方を教えて。なぜt検定を繰り返してはいけないのか？</div>
+        </div>
+      </div>
+      <div class="qa-answer-body">
+        <div class="qa-header" style="padding:0 0 12px;">
+          <div class="qa-avatar avatar-a">A</div>
+          <div><div class="qa-content-label">回答</div></div>
+        </div>
+        <p>3グループでt検定を繰り返すと第一種過誤が膨らむ：\(1-(1-0.05)^3 \approx 0.143\)</p>
+        <div class="formula-box">
+          <p>総変動の分解：\(SS_T = SS_A + SS_E\)</p>
+        </div>
+        <table class="data-table" style="margin:14px 0">
+          <tr><th>要因</th><th>平方和</th><th>自由度</th><th>平均平方</th></tr>
+          <tr><td class="td-key">級間（グループ間）</td><td>\(SS_A\)</td><td>\(k-1\)</td><td>\(MS_A = SS_A/(k-1)\)</td></tr>
+          <tr><td class="td-key">級内（残差）</td><td>\(SS_E\)</td><td>\(n-k\)</td><td>\(MS_E = SS_E/(n-k)\)</td></tr>
+          <tr><td class="td-key">総計</td><td>\(SS_T\)</td><td>\(n-1\)</td><td>—</td></tr>
+        </table>
+        <div class="formula-box blue">
+          <p>\( F = \dfrac{MS_A}{MS_E} \sim F(k-1, n-k) \)（\(H_0\) のもとで）</p>
+        </div>
+        <div class="note-box note-gold">
+          <strong>直感：</strong>グループ間のばらつきがグループ内のばらつきより十分大きければ → グループの効果がある！
+        </div>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-header">
+        <div class="qa-avatar avatar-q">Q</div>
+        <div>
+          <div class="qa-content-label">質問</div>
+          <div class="qa-text">各年度の各月データで一元配置分散分析した場合、「水準間」は月間か年間か？</div>
+        </div>
+      </div>
+      <div class="qa-answer-body">
+        <div class="qa-header" style="padding:0 0 12px;">
+          <div class="qa-avatar avatar-a">A</div>
+          <div><div class="qa-content-label">回答</div></div>
+        </div>
+        <p>「何を因子として設定したか」による。一元配置は因子が1つ。</p>
+        <table class="data-table">
+          <tr><th>設定した因子</th><th>水準間の意味</th></tr>
+          <tr><td class="td-key">因子 ＝ 月</td><td>水準間 ＝ <strong>月間</strong>の変動</td></tr>
+          <tr><td class="td-key">因子 ＝ 年</td><td>水準間 ＝ <strong>年間</strong>の変動</td></tr>
+        </table>
+        <div class="note-box note-red" style="margin-top:12px">
+          ⚠️ 月と年の<strong>両方が存在するデータ</strong>に一元配置を使うと、因子として使わなかった方の影響が残差に混入する。本来は<strong>二元配置分散分析</strong>を使うべき。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ====== 回帰分析 ====== -->
+  <div class="section" id="regression">
+    <div class="section-header">
+      <div class="section-icon icon-blue">📈</div>
+      <div>
+        <div class="section-title">回帰分析</div>
+        <div class="section-sub">OLS・決定係数・係数の区間推定</div>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-header">
+        <div class="qa-avatar avatar-q">Q</div>
+        <div>
+          <div class="qa-content-label">質問</div>
+          <div class="qa-text">線形回帰の残差が自由度 n-2 なのは \(\bar{X}\) と \(\bar{Y}\) による拘束条件が2つあるから？</div>
+        </div>
+      </div>
+      <div class="qa-answer-body">
+        <div class="qa-header" style="padding:0 0 12px;">
+          <div class="qa-avatar avatar-a">A</div>
+          <div><div class="qa-content-label">回答</div></div>
+        </div>
+        <p>半分正解。正確には<strong>OLS推定で2つのパラメータ \(\hat{\alpha}, \hat{\beta}\) を推定したから</strong>。</p>
+        <p>OLSの正規方程式は2本：</p>
+        <div class="formula-box">
+          <p>\(\sum e_i = 0\)（第1正規方程式 ← \(\bar{Y}\) に対応）</p>
+          <p>\(\sum X_i e_i = 0\)（第2正規方程式 ← \(\bar{X}\) に関連）</p>
+        </div>
+        <div class="note-box note-blue">
+          <strong>一般則：</strong>説明変数が p 個の重回帰なら自由度は \(n - p - 1\)
+        </div>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-header">
+        <div class="qa-avatar avatar-q">Q</div>
+        <div>
+          <div class="qa-content-label">質問</div>
+          <div class="qa-text">Rの回帰分析出力の読み方を教えて</div>
+        </div>
+      </div>
+      <div class="qa-answer-body">
+        <div class="qa-header" style="padding:0 0 12px;">
+          <div class="qa-avatar avatar-a">A</div>
+          <div><div class="qa-content-label">回答</div></div>
+        </div>
+        <table class="data-table">
+          <tr><th>列名</th><th>意味</th><th>計算式</th></tr>
+          <tr><td class="td-key">Estimate</td><td>回帰係数の推定値 \(\hat{\beta}\)</td><td>—</td></tr>
+          <tr><td class="td-key">Std. Error</td><td>標準誤差 \(SE(\hat{\beta})\)</td><td>小さいほど精度高</td></tr>
+          <tr><td class="td-key">t value</td><td>t 値</td><td>\(t = \hat{\beta} / SE(\hat{\beta})\)</td></tr>
+          <tr><td class="td-key">Pr(&gt;|t|)</td><td>p 値（両側）</td><td>帰無仮説 \(\beta=0\) の検定</td></tr>
+        </table>
+        <table class="data-table" style="margin-top:10px">
+          <tr><th>記号</th><th>p値の範囲</th><th>意味</th></tr>
+          <tr><td class="td-key"><code>***</code></td><td>\(p < 0.001\)</td><td>0.1%水準で有意</td></tr>
+          <tr><td class="td-key"><code>**</code></td><td>\(p < 0.01\)</td><td>1%水準で有意</td></tr>
+          <tr><td class="td-key"><code>*</code></td><td>\(p < 0.05\)</td><td>5%水準で有意</td></tr>
+        </table>
+        <div class="formula-box teal" style="margin-top:14px">
+          <p>調整済み決定係数：\( \displaystyle \bar{R}^2 = 1 - \frac{RSS/(n-p-1)}{TSS/(n-1)} \)</p>
+        </div>
+        <div class="note-box note-gold">
+          <strong>R² vs 調整済みR²：</strong>R² は説明変数を増やすと必ず増加する。調整済みR² は無駄な変数を加えると減少するため、モデル比較に使う。
+        </div>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-header">
+        <div class="qa-avatar avatar-q">Q</div>
+        <div>
+          <div class="qa-content-label">質問</div>
+          <div class="qa-text">ダミー変数で多重共線性が生じる場合、DLでも同じ問題が起きるか？</div>
+        </div>
+      </div>
+      <div class="qa-answer-body">
+        <div class="qa-header" style="padding:0 0 12px;">
+          <div class="qa-avatar avatar-a">A</div>
+          <div><div class="qa-content-label">回答</div></div>
+        </div>
+        <table class="data-table">
+          <tr><th></th><th>線形回帰</th><th>ディープラーニング</th></tr>
+          <tr><td class="td-key">問題の深刻さ</td><td>\((X^\top X)^{-1}\) が存在せず計算不可能</td><td>致命的クラッシュはないが学習不安定</td></tr>
+          <tr><td class="td-key">対処法</td><td>k-1 個のダミー変数</td><td>Embedding層で根本解決（主流）</td></tr>
+        </table>
+        <div class="note-box note-blue">
+          <strong>統計検定2級の文脈：</strong>「線形回帰では必ず k-1 個のダミー変数（基準カテゴリを1つ除外）」と覚える。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <!-- ====== MISC ====== -->
+  <div class="section" id="misc">
+    <div class="section-header">
+      <div class="section-icon icon-purple">🔮</div>
+      <div>
+        <div class="section-title">その他のQ&amp;A</div>
+        <div class="section-sub">変動係数・共分散・ROC曲線など</div>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-header">
+        <div class="qa-avatar avatar-q">Q</div>
+        <div>
+          <div class="qa-content-label">質問</div>
+          <div class="qa-text">変動係数（CV）とは何か？なぜ必要なのか？</div>
+        </div>
+      </div>
+      <div class="qa-answer-body">
+        <div class="qa-header" style="padding:0 0 12px;">
+          <div class="qa-avatar avatar-a">A</div>
+          <div><div class="qa-content-label">回答</div></div>
+        </div>
+        <div class="formula-box">
+          <p>\( \displaystyle CV = \frac{\sigma}{\mu} \quad (\text{または} \times 100\%) \)</p>
+        </div>
+        <p>標準偏差だけでは異なる単位・スケールのデータのばらつきを比較できない。CVは無次元量のため、単位が異なるデータを横断的に比較できる。</p>
+        <div class="note-box note-red">
+          <strong>注意：</strong>\(\mu \approx 0\) や \(\mu < 0\) のとき CV は意味をなさない。
+        </div>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-header">
+        <div class="qa-avatar avatar-q">Q</div>
+        <div>
+          <div class="qa-content-label">質問</div>
+          <div class="qa-text">\(E[X] = E[\bar{X}] = \mu\) ということか？</div>
+        </div>
+      </div>
+      <div class="qa-answer-body">
+        <div class="qa-header" style="padding:0 0 12px;">
+          <div class="qa-avatar avatar-a">A</div>
+          <div><div class="qa-content-label">回答</div></div>
+        </div>
+        <p>等しいのは<strong>期待値だけ</strong>。</p>
+        <table class="data-table">
+          <tr><th></th><th>\(X\)（個々の観測値）</th><th>\(\bar{X}\)（n個の平均）</th></tr>
+          <tr><td class="td-key">期待値</td><td>\(\mu\)</td><td>\(\mu\)</td></tr>
+          <tr><td class="td-key">分散</td><td>\(\sigma^2\)</td><td>\(\sigma^2/n\)</td></tr>
+        </table>
+        <p>中心極限定理（サイコロの例）：個々の目は一様分布だが、n個の平均は n を大きくするほど正規分布に近づく。これが検定の土台にある考え方。</p>
+      </div>
+    </div>
+
+    <div class="qa-card">
+      <div class="qa-header">
+        <div class="qa-avatar avatar-q">Q</div>
+        <div>
+          <div class="qa-content-label">質問</div>
+          <div class="qa-text">試験での失敗パターンはどちらが多い？時間不足か学習不足か？</div>
+        </div>
+      </div>
+      <div class="qa-answer-body">
+        <div class="qa-header" style="padding:0 0 12px;">
+          <div class="qa-avatar avatar-a">A</div>
+          <div><div class="qa-content-label">回答</div></div>
+        </div>
+        <div class="note-box note-gold">
+          <strong>学習範囲不足の方が圧倒的に多い。</strong>時間は90分35問（1問あたり約2.5分）で、公式と手順を習得していれば足りる設計。
+        </div>
+        <table class="data-table" style="margin-top:12px">
+          <tr><th>分野</th><th>推定比率</th><th>重要度</th></tr>
+          <tr><td class="td-key">推測統計（推定・検定）</td><td>30〜35%</td><td>★★★★★</td></tr>
+          <tr><td class="td-key">確率・確率分布</td><td>約20%</td><td>★★★★★</td></tr>
+          <tr><td class="td-key">回帰分析</td><td>15〜20%</td><td>★★★★☆</td></tr>
+          <tr><td class="td-key">記述統計</td><td>約12%</td><td>★★★☆☆</td></tr>
+          <tr><td class="td-key">データ収集・実験計画</td><td>約8%</td><td>★★☆☆☆</td></tr>
+        </table>
+        <p>合格（6割 ≈ 21問正解）には推測統計＋確率を固めるのが最優先。回帰分析を捨てないこと。</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Scroll to top -->
+<a href="#overview" class="scroll-top" id="scrollTop">↑</a>
+
+<script>
+  // KaTeX render
+  document.addEventListener("DOMContentLoaded", function () {
+    renderMathInElement(document.body, {
+      delimiters: [
+        {left: "\\(", right: "\\)", display: false},
+        {left: "\\[", right: "\\]", display: true},
+        {left: "$$", right: "$$", display: true}
+      ],
+      throwOnError: false
+    });
+
+    // Scroll top button
+    const btn = document.getElementById('scrollTop');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 400) btn.classList.add('visible');
+      else btn.classList.remove('visible');
+    });
+
+    // Active sidebar link
+    const sections = document.querySelectorAll('.section, .hero');
+    const links = document.querySelectorAll('.sidebar-link');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(sec => {
+        if (window.scrollY >= sec.offsetTop - 100) current = sec.id;
+      });
+      links.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) link.classList.add('active');
+      });
+    });
+  });
+
+  // FAQ toggle
+  function toggleFaq(el) {
+    const item = el.closest('.faq-item');
+    item.classList.toggle('open');
+  }
+</script>
+</body>
+</html>
